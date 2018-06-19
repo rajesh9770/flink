@@ -5,6 +5,21 @@ import org.apache.flink.streaming.api.datastream.DataStreamSource;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 
 public class StreamUtil<T> {
+
+    public static DataStreamSource<String> getDataStream(String [] args){
+
+        // Checking input parameters
+        final ParameterTool params = ParameterTool.fromArgs(args);
+
+        // set up the execution environment
+        final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+
+        // make parameters available in the web interface
+        env.getConfig().setGlobalJobParameters(params);
+
+        return getDataStream(env, params);
+    }
+
     public static DataStreamSource<String> getDataStream(StreamExecutionEnvironment env, final ParameterTool params){
         DataStreamSource<String> stream = null;
         if(params.has("input")){
