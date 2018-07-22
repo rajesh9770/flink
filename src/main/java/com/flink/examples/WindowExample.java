@@ -39,8 +39,8 @@ public class WindowExample {
         }).returns(new TypeHint<Tuple2<String, Double>>() { }.getTypeInfo());
         //For Session Window of gap 10 sec   (non-fix size of events - all events that happen during that session/non-overlapping)
         //new session window will be started once a session is ideal for more than 10 sec.
-        //DataStream<Tuple2<String, Double>> sum = outputStream.keyBy(0).window(ProcessingTimeSessionWindows.withGap(Time.seconds(10))).sum(1);
-        DataStream<Tuple2<String, Double>> sum = outputStream.windowAll(ProcessingTimeSessionWindows.withGap(Time.seconds(10))).sum(1);
+        DataStream<Tuple2<String, Double>> sum = outputStream.keyBy(0).window(ProcessingTimeSessionWindows.withGap(Time.seconds(10))).sum(1);
+        //DataStream<Tuple2<String, Double>> sum = outputStream.windowAll(ProcessingTimeSessionWindows.withGap(Time.seconds(10))).sum(1);
         sum.print();
         env.execute("TumblingWindow");
     }
